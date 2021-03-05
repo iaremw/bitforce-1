@@ -57,6 +57,7 @@ def address(pubkey):
 
 def balance(address):
     APIGet = requests.get(
+        "http://webbtc.com/address/" + str(address) + ".json")
         "https://insight.bitpay.com/api/addr/" + str(address))
     if (APIGet.status_code == 429):
         pau.pau += 1
@@ -72,6 +73,7 @@ def balance(address):
         time.sleep(10)
         return -1
     data = APIGet.json()
+    balance = int(data["balance"])
     balance = int(data["balanceSat"])
     pau.pau = 0
     return balance
